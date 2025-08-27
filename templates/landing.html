@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepFake Detection - Welcome</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.80/build/spline-viewer.js"></script>
+</head>
+<body class="dark-theme">
+    {% include 'navbar.html' %}
+    
+    <div class="spline-background">
+        <spline-viewer url="https://prod.spline.design/7ko6eGU48QYnevBs/scene.splinecode"></spline-viewer>
+    </div>
+
+    <div class="landing-container">
+        <header class="landing-header">
+            <h1>DeepFake <span class="accent">Detection</span></h1>
+            <p class="subtitle">Unveiling the truth in the digital age</p>
+        </header>
+
+        <div class="info-section">
+            <div class="info-card glass">
+                <h2>What are Deepfakes?</h2>
+                <p>Synthetic media where AI manipulates or generates realistic images and videos, posing new challenges to digital authenticity.</p>
+            </div>
+            <div class="info-card glass">
+                <h2>Our Technology</h2>
+                <p>Advanced AI algorithms analyze media content, detecting subtle patterns and inconsistencies that reveal artificial manipulation.</p>
+            </div>
+            <div class="info-card glass">
+                <h2>Impact Cases</h2>
+                <div class="case-carousel">
+                    <div class="case-item">
+                        <div class="case-icon">🎭</div>
+                        <h3>Identity Theft</h3>
+                        <p>73% increase in deepfake-related identity fraud cases in 2024</p>
+                    </div>
+                    <div class="case-item">
+                        <div class="case-icon">💼</div>
+                        <h3>Business Fraud</h3>
+                        <p>$5B lost to deepfake scams in corporate sector</p>
+                    </div>
+                    <div class="case-item">
+                        <div class="case-icon">🗣️</div>
+                        <h3>Misinformation</h3>
+                        <p>52% rise in deepfake videos in political campaigns</p>
+                    </div>
+                    <div class="case-item">
+                        <div class="case-icon">🔒</div>
+                        <h3>Privacy Breach</h3>
+                        <p>2.3M individuals affected by deepfake privacy violations</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            {% if 'user_id' in session %}
+            <a href="{{ url_for('upload') }}" class="cta-button neo-button">
+                Start Detection
+                <div class="neo-gradient"></div>
+            </a>
+            {% else %}
+            <div class="cta-buttons">
+                <a href="{{ url_for('login') }}" class="cta-button neo-button">
+                    Get Started
+                    <div class="neo-gradient"></div>
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

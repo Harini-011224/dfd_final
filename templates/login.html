@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Deepfake Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.80/build/spline-viewer.js"></script>
+</head>
+<body class="dark-theme">
+    {% include 'navbar.html' %}
+    
+    <div class="spline-background">
+        <spline-viewer url="https://prod.spline.design/zPQ-8saj0IFVa7Cs/scene.splinecode"></spline-viewer>
+    </div>
+
+    <div class="auth-container">
+        <div class="auth-box glass">
+            <h2>Login</h2>
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert {% if 'error' in message.lower() %}danger{% else %}success{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form method="POST" action="{{ url_for('login') }}" class="auth-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required class="form-input glass">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required class="form-input glass">
+                </div>
+                <button type="submit" class="auth-button glass">Login</button>
+            </form>
+            <div class="auth-links">
+                <p>Don't have an account? <a href="{{ url_for('register') }}">Register</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

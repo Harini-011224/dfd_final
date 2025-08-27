@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis History - Deepfake Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <div class="spline-background">
+        <spline-viewer url="https://prod.spline.design/m-O9cuw65KHz4npQ/scene.splinecode"></spline-viewer>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>Analysis History</h1>
+            <p>View your past deepfake detection analyses</p>
+        </header>
+
+        <div class="history-stats glass">
+            <div class="stat-cards">
+                <div class="stat-card">
+                    <h4>Total Analyses</h4>
+                    <div class="stat-value">{{ total_analyses }}</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Detected Fakes</h4>
+                    <div class="stat-value">{{ fake_count }}</div>
+                </div>
+                <div class="stat-card">
+                    <h4>Average Confidence</h4>
+                    <div class="stat-value">{{ "%.1f"|format(avg_confidence) }}%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="history-container glass">
+            {% if history %}
+                {% for entry in history %}
+                <div class="history-entry glass">
+                    <div class="history-image">
+                        <img src="data:image/png;base64,{{ entry.image }}" alt="Analysis Result">
+                    </div>
+                    <div class="history-details">
+                        <div class="history-header">
+                            <h3 class="history-date">{{ entry.timestamp.strftime('%B %d, %Y %H:%M') }}</h3>
+                            <span class="history-label {{ 'success' if entry.label == 'real' else 'danger' }}">
+                                {{ entry.label.upper() }}
+                            </span>
+                        </div>
+                        <div class="history-metrics">
+                            <div class="metric">
+                                <span class="metric-label">Confidence:</span>
+                                <span class="metric-value">{{ "%.1f"|format(entry.confidence) }}%</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Processing Time:</span>
+                                <span class="metric-value">{{ "%.2f"|format(entry.processing_time) }}s</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Model Accuracy:</span>
+                                <span class="metric-value">{{ "%.1f"|format(entry.model_accuracy) }}%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-history glass">
+                    <h3>No Analysis History</h3>
+                    <p>Your analysis history will appear here once you analyze some images.</p>
+                    <a href="{{ url_for('upload') }}" class="button glass">Start Analysis</a>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="pagination glass">
+            {% if page > 1 %}
+                <a href="{{ url_for('history', page=page-1) }}" class="button secondary">Previous</a>
+            {% endif %}
+            <span class="page-info">Page {{ page }} of {{ total_pages }}</span>
+            {% if page < total_pages %}
+                <a href="{{ url_for('history', page=page+1) }}" class="button secondary">Next</a>
+            {% endif %}
+        </div>
+
+        <div class="back-link">
+            <a href="{{ url_for('index') }}" class="button secondary glass">Back to Home</a>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
