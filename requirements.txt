@@ -1,0 +1,9 @@
+Flask
+Pillow
+opencv-python
+numpy
+matlab.engine
+pymongo
+bcrypt
+python-dotenv
+Flask-Login
